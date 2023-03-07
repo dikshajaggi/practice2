@@ -1,0 +1,7 @@
+using swiggy api
+restaurant availability feature -> custom hook 
+search bar
+specific rest page
+routing
+shimmer ui
+restname in route
