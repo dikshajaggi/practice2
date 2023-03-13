@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Card from './Card'
 import "../style.css"
 import axios from "axios"
 import { Link } from 'react-router-dom'
+import { userContext } from '../Utils/UserContext'
 // import Test from './ClassComp'
 
 
@@ -658,6 +659,18 @@ const Main = () => {
     const [pizzaData, setPizzaData] = useState(data)
     const [searchvalue, setSearchvalue] = useState("test")
 
+    const username1 = useContext(userContext)
+    console.log(username1.user, "username--")
+    const [loginValue, setLoginValue] = useState('I love you')
+    const ChangeLoginValue = (e) => {
+        setLoginValue(e.target.value)
+    }
+    const login = () => {
+        console.log(username1.user, loginValue, "check")
+        username1.setUser(loginValue)
+        if (loginValue === "") username1.setUser(username1.user)
+    }
+
     useEffect(() => {
         getRest()
     }, [searchvalue])
@@ -679,10 +692,24 @@ const Main = () => {
     }
     return (
         <div className='main-wrapper'>
-            <div className='search-wrapper'>
-                <input type="search" className='search-box' placeholder='search' value={searchvalue} onChange={searchpizza} />
-                <button onClick={search}>Search</button>
-            </div>
+            <header>
+                <ul className='navbar'>
+                    <Link to="/" style={{ textDecoration: 'none' }}><li>HOME</li></Link>
+                    <Link to="/about" style={{ textDecoration: 'none' }}><li>ABOUT</li></Link>
+                </ul>
+                <div className='search-wrapper'>
+                    <input type="search" className='search-box' placeholder='search' value={searchvalue} onChange={searchpizza} />
+                    <button onClick={search}>Search</button>
+                </div>
+                <div className='user'>
+                    <div className='search-wrapper'>
+                        <input type="search" className='search-box' placeholder='search' value={loginValue} onChange={ChangeLoginValue} />
+                        <button onClick={login}>Login</button>
+                    </div>
+                    <h3> {`Hello ${username1.user}`}</h3>
+                </div>
+            </header>
+
             {/* <div className='card-wrapper'>
                 {data.map((item) => {
                     return < Card info={item} />

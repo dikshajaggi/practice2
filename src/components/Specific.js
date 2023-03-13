@@ -1,7 +1,8 @@
 import axios from "axios"
-import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useContext, useEffect, useState } from "react"
+import { Link, useParams } from "react-router-dom"
 import useAvailable from "../hooks/useAvailable"
+import { userContext } from '../Utils/UserContext'
 
 const Specific = () => {
     const rest_id = useParams()
@@ -21,19 +22,30 @@ const Specific = () => {
     }
 
     const avail = useAvailable(info?.availability?.opened)
+    const username = useContext(userContext)
+    console.log(username, "username--")
     return (
-        <div className='specific-card'>
-            <h2 className='specifc-heading'>{info?.name}</h2>
-            <h2>{`Cuisines: ${info?.cuisines}`}</h2>
-            <h2>{`Area: ${info?.areaName}`}</h2>
-            <h2>{`Avg. Rating: ${info?.avgRating}`}</h2>
-            <h2>{`Availability: ${avail}`}</h2>
+        <>
+            <header>
+                <ul className='navbar'>
+                    <Link to="/" style={{ textDecoration: 'none' }}><li>HOME</li></Link>
+                    <Link to="/about" style={{ textDecoration: 'none' }}><li>ABOUT</li></Link>
+                </ul>
+            </header>
+            <div className='specific-card'>
+                <h2 className='specifc-heading'>{info?.name}</h2>
+                <h2>{`Cuisines: ${info?.cuisines}`}</h2>
+                <h2>{`Area: ${info?.areaName}`}</h2>
+                <h2>{`Avg. Rating: ${info?.avgRating}`}</h2>
+                <h2>{`Availability: ${avail}`}</h2>
 
-            {/* {otherInfo?.map(dish => (
+                {/* {otherInfo?.map(dish => (
                 // dish.card?.card?.itemCards?.map(specific => console.log(specific.card.info.name, "title"))
                 <h2 className='additional' > {dish?.card?.card?.title}</h2>
             ))} */}
-        </div >
+            </div >
+        </>
+
     )
 }
 
